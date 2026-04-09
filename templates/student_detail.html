@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Student Profile</h2>
+
+<div class="detail-box">
+    <p><strong>ID:</strong> {{ student[0] }}</p>
+    <p><strong>Name:</strong> {{ student[1] }} {{ student[2] }}</p>
+    <p><strong>Email:</strong> {{ student[3] }}</p>
+    <p><strong>Major:</strong> {{ student[4] }}</p>
+    <p><strong>Year:</strong> {{ student[5] }}</p>
+</div>
+
+<h3>Edit Student Profile</h3>
+<form method="post" action="{{ url_for('edit_student', student_id=student[0]) }}" class="form-grid">
+    <input name="first_name" value="{{ student[1] }}" placeholder="First Name" required>
+    <input name="last_name" value="{{ student[2] }}" placeholder="Last Name" required>
+    <input name="email" value="{{ student[3] }}" placeholder="Email" required>
+    <input name="major" value="{{ student[4] }}" placeholder="Major">
+    <input name="year" value="{{ student[5] }}" placeholder="Year">
+    <button type="submit">Save Changes</button>
+</form>
+
+<h3>Enroll in a Course</h3>
+<form method="post" action="{{ url_for('enroll_student_from_student_page', student_id=student[0]) }}">
+    <input list="course_suggestions" name="course_id" placeholder="Enter Course ID" required>
+    <datalist id="course_suggestions">
+        {% for c in all_courses %}
+            <option value="{{ c[0] }}">{{ c[1] }} ({{ c[2] }})</option>
+        {% endfor %}
+    </datalist>
+    <button type="submit">Add to Course</button>
+</form>
+
+<h3>Enrolled Courses</h3>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Course Name</th>
+            <th>Code</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if enrolled_courses %}
+            {% for c in enrolled_courses %}
+            <tr>
+                <td>{{ c[0] }}</td>
+                <td>{{ c[1] }}</td>
+                <td>{{ c[2] }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('drop_student_from_course', student_id=student[0], course_id=c[0]) }}" class="inline">
+                        <button class="danger small" type="submit">Unenroll</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="4">This student is not enrolled in any courses.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

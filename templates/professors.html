@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Faculty Directory</h2>
+
+<form method="get" class="search-bar">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search by ID, name, department, or email">
+    <button type="submit">Search</button>
+</form>
+
+<h3>Add Professor</h3>
+<form method="post" action="{{ url_for('add_professor') }}" class="form-grid">
+    <input name="first_name" placeholder="First Name" required>
+    <input name="last_name" placeholder="Last Name" required>
+    <input name="department" placeholder="Department">
+    <input name="email" placeholder="Email" required>
+    <button type="submit">Add Professor</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th><th>First</th><th>Last</th><th>Department</th><th>Email</th><th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in professors %}
+        <tr>
+            <td>{{ p[0] }}</td>
+            <td>{{ p[1] }}</td>
+            <td>{{ p[2] }}</td>
+            <td>{{ p[3] }}</td>
+            <td>{{ p[4] }}</td>
+            <td>
+                <a class="button small" href="{{ url_for('professor_detail', professor_id=p[0]) }}">Open</a>
+                <form method="post" action="{{ url_for('delete_professor', professor_id=p[0]) }}" class="inline">
+                    <button class="danger small" type="submit">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

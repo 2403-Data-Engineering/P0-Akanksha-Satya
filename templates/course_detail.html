@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Course Profile</h2>
+
+<div class="detail-box">
+    <p><strong>ID:</strong> {{ course[0] }}</p>
+    <p><strong>Course Name:</strong> {{ course[1] }}</p>
+    <p><strong>Course Code:</strong> {{ course[2] }}</p>
+    <p><strong>Professor ID:</strong> {{ course[3] }}</p>
+    <p><strong>Professor:</strong> {{ course[4] }} {{ course[5] }}</p>
+</div>
+
+<h3>Add Student to Course</h3>
+<form method="post" action="{{ url_for('enroll_student_from_course_page', course_id=course[0]) }}">
+    <input list="student_suggestions" name="student_id" placeholder="Enter Student ID" required>
+    <datalist id="student_suggestions">
+        {% for s in all_students %}
+            <option value="{{ s[0] }}">{{ s[1] }} {{ s[2] }}</option>
+        {% endfor %}
+    </datalist>
+    <button type="submit">Add Student</button>
+</form>
+
+<h3>Students in Course</h3>
+<table>
+    <thead>
+        <tr><th>ID</th><th>First</th><th>Last</th><th>Email</th></tr>
+    </thead>
+    <tbody>
+        {% for s in students_in_course %}
+        <tr>
+            <td>{{ s[0] }}</td>
+            <td>{{ s[1] }}</td>
+            <td>{{ s[2] }}</td>
+            <td>{{ s[3] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

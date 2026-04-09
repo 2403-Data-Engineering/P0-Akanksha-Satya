@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Student Enrollment Report</h2>
+
+<div class="detail-box">
+    <p><strong>ID:</strong> {{ student[0] }}</p>
+    <p><strong>Name:</strong> {{ student[1] }} {{ student[2] }}</p>
+    <p><strong>Email:</strong> {{ student[3] }}</p>
+    <p><strong>Major:</strong> {{ student[4] }}</p>
+    <p><strong>Year:</strong> {{ student[5] }}</p>
+</div>
+
+<h3>Enrolled Courses</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Course ID</th>
+            <th>Course Name</th>
+            <th>Course Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if courses %}
+            {% for c in courses %}
+            <tr>
+                <td>{{ c[0] }}</td>
+                <td>{{ c[1] }}</td>
+                <td>{{ c[2] }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="3">This student is not enrolled in any courses.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

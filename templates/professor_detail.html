@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Professor Profile</h2>
+
+<div class="detail-box">
+    <p><strong>ID:</strong> {{ professor[0] }}</p>
+    <p><strong>Name:</strong> {{ professor[1] }} {{ professor[2] }}</p>
+    <p><strong>Department:</strong> {{ professor[3] }}</p>
+    <p><strong>Email:</strong> {{ professor[4] }}</p>
+</div>
+
+<h3>Edit Professor Profile</h3>
+<form method="post" action="{{ url_for('edit_professor', professor_id=professor[0]) }}" class="form-grid">
+    <input name="first_name" value="{{ professor[1] }}" placeholder="First Name" required>
+    <input name="last_name" value="{{ professor[2] }}" placeholder="Last Name" required>
+    <input name="department" value="{{ professor[3] }}" placeholder="Department">
+    <input name="email" value="{{ professor[4] }}" placeholder="Email" required>
+    <button type="submit">Save Changes</button>
+</form>
+
+<h3>Assigned Courses</h3>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Course Name</th>
+            <th>Course Code</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if courses %}
+            {% for c in courses %}
+            <tr>
+                <td>{{ c[0] }}</td>
+                <td>{{ c[1] }}</td>
+                <td>{{ c[2] }}</td>
+                <td>
+                    <form method="post" action="{{ url_for('unassign_professor_from_course', professor_id=professor[0], course_id=c[0]) }}" class="inline">
+                        <button class="danger small" type="submit">Remove from Course</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="4">This professor is not currently assigned to any courses.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}

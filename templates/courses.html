@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Course Catalog</h2>
+
+<form method="get" class="search-bar">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search by ID, course name, code, or professor">
+    <button type="submit">Search</button>
+</form>
+
+<h3>Add Course</h3>
+<form method="post" action="{{ url_for('add_course') }}" class="form-grid">
+    <input name="course_name" placeholder="Course Name" required>
+    <input name="course_code" placeholder="Course Code" required>
+    <input list="prof_suggestions" name="professor_id" placeholder="Professor ID" required>
+    <datalist id="prof_suggestions">
+        {% for p in professors %}
+            <option value="{{ p[0] }}">{{ p[1] }} {{ p[2] }}</option>
+        {% endfor %}
+    </datalist>
+    <button type="submit">Add Course</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th><th>Course Name</th><th>Code</th><th>Professor First</th><th>Professor Last</th><th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in courses %}
+        <tr>
+            <td>{{ c[0] }}</td>
+            <td>{{ c[1] }}</td>
+            <td>{{ c[2] }}</td>
+            <td>{{ c[3] }}</td>
+            <td>{{ c[4] }}</td>
+            <td>
+                <a class="button small" href="{{ url_for('course_detail', course_id=c[0]) }}">Open</a>
+                <form method="post" action="{{ url_for('delete_course', course_id=c[0]) }}" class="inline">
+                    <button class="danger small" type="submit">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

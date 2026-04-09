@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Professor Summary Report</h2>
+
+<div class="detail-box">
+    <p><strong>ID:</strong> {{ professor[0] }}</p>
+    <p><strong>Name:</strong> {{ professor[1] }} {{ professor[2] }}</p>
+    <p><strong>Department:</strong> {{ professor[3] }}</p>
+    <p><strong>Email:</strong> {{ professor[4] }}</p>
+</div>
+
+<h3>Courses and Enrollments</h3>
+
+{% if course_data %}
+    {% for item in course_data %}
+        <div class="detail-box">
+            <p><strong>Course:</strong> {{ item.course[1] }}</p>
+            <p><strong>Code:</strong> {{ item.course[2] }}</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if item.students %}
+                        {% for s in item.students %}
+                        <tr>
+                            <td>{{ s[0] }}</td>
+                            <td>{{ s[1] }}</td>
+                            <td>{{ s[2] }}</td>
+                            <td>{{ s[3] }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="4">No students enrolled in this course.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
+{% else %}
+    <p>This professor is not currently assigned to any courses.</p>
+{% endif %}
+{% endblock %}

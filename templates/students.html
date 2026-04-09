@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Student Directory</h2>
+
+<form method="get" class="search-bar">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search by ID, name, email, or major">
+    <button type="submit">Search</button>
+</form>
+
+<h3>Add Student</h3>
+<form method="post" action="{{ url_for('add_student') }}" class="form-grid">
+    <input name="first_name" placeholder="First Name" required>
+    <input name="last_name" placeholder="Last Name" required>
+    <input name="email" placeholder="Email" required>
+    <input name="major" placeholder="Major">
+    <input name="year" placeholder="Year">
+    <button type="submit">Add Student</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th><th>First</th><th>Last</th><th>Email</th><th>Major</th><th>Year</th><th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in students %}
+        <tr>
+            <td>{{ s[0] }}</td>
+            <td>{{ s[1] }}</td>
+            <td>{{ s[2] }}</td>
+            <td>{{ s[3] }}</td>
+            <td>{{ s[4] }}</td>
+            <td>{{ s[5] }}</td>
+            <td>
+                <a class="button small" href="{{ url_for('student_detail', student_id=s[0]) }}">Open</a>
+                <form method="post" action="{{ url_for('delete_student', student_id=s[0]) }}" class="inline">
+                    <button class="danger small" type="submit">Remove</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

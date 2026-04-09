@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Reports</h2>
+
+<div class="grid">
+    <div class="card">
+        <h3>Student Enrollment Report</h3>
+        <input list="student_ids" id="studentSelect" placeholder="Select Student ID">
+        <datalist id="student_ids">
+            {% for s in students %}
+                <option value="{{ s[0] }}">{{ s[1] }} {{ s[2] }}</option>
+            {% endfor %}
+        </datalist>
+        <button type="button" onclick="openStudentReport()">Open Report</button>
+    </div>
+
+    <div class="card">
+        <h3>Professor Summary Report</h3>
+        <input list="professor_ids" id="professorSelect" placeholder="Select Professor ID">
+        <datalist id="professor_ids">
+            {% for p in professors %}
+                <option value="{{ p[0] }}">{{ p[1] }} {{ p[2] }}</option>
+            {% endfor %}
+        </datalist>
+        <button type="button" onclick="openProfessorReport()">Open Report</button>
+    </div>
+</div>
+
+<script>
+function openStudentReport() {
+    const id = document.getElementById("studentSelect").value.trim();
+    if (!/^\d+$/.test(id)) {
+        alert("Invalid ID. Please enter a number.");
+        return;
+    }
+    window.location.href = "/reports/student/" + id;
+}
+
+function openProfessorReport() {
+    const id = document.getElementById("professorSelect").value.trim();
+    if (!/^\d+$/.test(id)) {
+        alert("Invalid ID. Please enter a number.");
+        return;
+    }
+    window.location.href = "/reports/professor/" + id;
+}
+</script>
+{% endblock %}

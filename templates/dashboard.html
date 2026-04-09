@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Advisor Dashboard</h2>
+
+<div class="grid">
+    <div class="card">
+        <h3>Students</h3>
+        <p>Search, add, remove, and manage student enrollments.</p>
+        <a class="button" href="{{ url_for('students') }}">Open Students</a>
+    </div>
+    <div class="card">
+        <h3>Professors</h3>
+        <p>Search, add, remove, and review faculty assignments.</p>
+        <a class="button" href="{{ url_for('professors') }}">Open Professors</a>
+    </div>
+    <div class="card">
+        <h3>Courses</h3>
+        <p>Search, add, remove, and manage course rosters.</p>
+        <a class="button" href="{{ url_for('courses') }}">Open Courses</a>
+    </div>
+    <div class="card">
+        <h3>Reports</h3>
+        <p>Download student and professor reports as PDF files.</p>
+        <a class="button" href="{{ url_for('reports') }}">Open Reports</a>
+    </div>
+</div>
+{% endblock %}
