@@ -24,9 +24,7 @@ class StudentService:
         return self.dao.search_students(query)
 
     def update_student(self, student_id, first_name, last_name, email, major, year):
-        current = self.dao.get_student_by_id(student_id)
         existing = self.dao.get_student_by_email(email)
-
         if existing and str(existing[0]) != str(student_id):
             return "Another student with this email already exists."
 
