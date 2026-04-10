@@ -13,7 +13,7 @@ class MainMenu:
             print("2. Manage Students")
             print("3. Manage Courses")
             print("4. Manage Enrollments")
-            print("5. Academic Advisor Portal")
+            print("5. Academic Advisor Portal Reports")
             print("0. Exit")
 
             choice = input("Enter your choice: ").strip()
