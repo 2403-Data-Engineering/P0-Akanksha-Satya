@@ -3,7 +3,10 @@
 # Revature Institute of Technology  
 ### Academic Advisor Portal
 
+#### web app version: python app.py 
 #### http://127.0.0.1:5000/
+
+### vs code terminal: python main.py
 
 This project is a full-stack academic management system built using Python, MySQL, and Flask. It allows users (academic advisors) to manage professors, students, courses, and enrollments through both a CLI and a web-based interface.
 
