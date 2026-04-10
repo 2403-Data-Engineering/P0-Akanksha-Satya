@@ -24,9 +24,7 @@ class ProfessorService:
         return self.dao.search_professors(query)
 
     def update_professor(self, professor_id, first_name, last_name, department, email):
-        current = self.dao.get_professor_by_id(professor_id)
         existing = self.dao.get_professor_by_email(email)
-
         if existing and str(existing[0]) != str(professor_id):
             return "Another professor with this email already exists."
 
