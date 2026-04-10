@@ -14,7 +14,7 @@ class EnrollmentMenu:
             print("4. View Courses for a Student")
             print("0. Back")
 
-            choice = input("Choose: ")
+            choice = input("Choose: ").strip()
 
             if choice == "1":
                 self.enroll_student()
@@ -27,22 +27,35 @@ class EnrollmentMenu:
             elif choice == "0":
                 break
             else:
-                print("Invalid choice. Try again.")
+                print("Invalid choice.")
 
     def enroll_student(self):
-        student_id = input("Student ID: ")
-        course_id = input("Course ID: ")
+        student_id = input("Student ID: ").strip()
+        course_id = input("Course ID: ").strip()
+
+        if not student_id.isdigit() or not course_id.isdigit():
+            print("Invalid ID. Please enter a number.")
+            return
+
         print(self.service.enroll_student(student_id, course_id))
 
     def drop_student(self):
-        student_id = input("Student ID: ")
-        course_id = input("Course ID: ")
+        student_id = input("Student ID: ").strip()
+        course_id = input("Course ID: ").strip()
+
+        if not student_id.isdigit() or not course_id.isdigit():
+            print("Invalid ID. Please enter a number.")
+            return
+
         print(self.service.drop_student(student_id, course_id))
 
     def view_students_in_course(self):
-        course_id = input("Course ID: ")
-        students = self.service.get_students_in_course(course_id)
+        course_id = input("Course ID: ").strip()
+        if not course_id.isdigit():
+            print("Invalid ID. Please enter a number.")
+            return
 
+        students = self.service.get_students_in_course(course_id)
         if not students:
             print("No students enrolled in this course.")
             return
@@ -51,9 +64,12 @@ class EnrollmentMenu:
             print(student)
 
     def view_courses_for_student(self):
-        student_id = input("Student ID: ")
-        courses = self.service.get_courses_for_student(student_id)
+        student_id = input("Student ID: ").strip()
+        if not student_id.isdigit():
+            print("Invalid ID. Please enter a number.")
+            return
 
+        courses = self.service.get_courses_for_student(student_id)
         if not courses:
             print("This student is not enrolled in any courses.")
             return
